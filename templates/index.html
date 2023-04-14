@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Content-based image retrieval</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 20px;
+            background-color: #F9F9F9;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        form {
+            margin-top: 30px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        select, input[type="file"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0062cc;
+        }
+
+        .img_center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <h1>Content-based image retrieval</h1>
+
+    <!-- App description -->
+    <div>
+        <h2>Description</h2>
+        <p>{{ app_description }}</p>
+    </div>
+
+    <!-- Query form -->
+    <div>
+        <h2>Query image search</h2>
+         <form action="/" method="post" enctype="multipart/form-data">
+            <label for="distance_metric">Select a distance metric:</label>
+            <select id="distance_metric" name="distance_metric">
+                <option value="euclidean">Euclidean</option>
+                <option value="cityblock">Cityblock</option>
+                <option value="minkowski">Minkowski</option>
+                <option value="chebyshev">Chebyshev</option>
+                <option value="cosine">Cosine</option>
+                <option value="canberra">Canberra</option>
+                <option value="jaccard">Jaccard</option>
+            </select>
+            <br>
+            <br>
+            <label for="k">Select number of similar images to retrieve:</label>
+            <select id="k" name="k">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+            <br>
+            <br>
+            <label for="image">Upload a query image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <br>
+            <br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+<!-- Uploaded image -->
+    {% if query_image_url %}
+        <h2>Uploaded image:</h2>
+        <div class="img_center">
+            <img src="{{ query_image_url }}" alt="Uploaded image">
+        </div>
+    {% endif %}
+
+</body>
+</html>
