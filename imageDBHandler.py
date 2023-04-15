@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, insert
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER, BYTEA
 from pandas import read_sql
 from tqdm import tqdm
-from feature_generator import GetImage
+from feature_extraction import GetImage
 
 class ImageDBHandler:
     """This is a class that manages the connection with the PostgreSQL database.
@@ -29,16 +29,14 @@ class ImageDBHandler:
         return f'postgresql://{user}:{secret}@{host}:{port}/{db}'
 
     def create_table(self):
-        print(f'Add records in dog_images table')
         metadata = MetaData(self.engine)
         table = Table('dog_images',
                       metadata,
                       Column('id', INTEGER, primary_key=True),
-                      Column('feature_vector', BYTEA),
+                      Column('descriptor_vector', BYTEA),
                       Column('breed', VARCHAR),
                       Column('filename', VARCHAR),
                       )
-
         try:
             metadata.create_all(bind=self.engine, checkfirst=True, tables=[table])
         except Exception as e:
@@ -78,7 +76,7 @@ class ImageDBHandler:
 
         except Exception as e:
             raise e
-        df['feature_vector'] = df['feature_vector'].apply(lambda x: pickle.loads(x))
+        df['descriptor_vector'] = df['descriptor_vector'].apply(lambda x: pickle.loads(x))
 
         return df
 
@@ -153,8 +151,8 @@ def get_total_files():
         try:
             dog_image = GetImage(image_file)
 
-            if dog_image.feature_vector is not None:
-                dog_image.encode_feature_vector()
+            if dog_image.descriptor_vector is not None:
+                dog_image.encode_descriptor_vector()
 
                 dog_images.append(dog_image.to_dict())  # append to dog_images
 
