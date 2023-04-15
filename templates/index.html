@@ -82,6 +82,32 @@
             max-height: 100%;
             object-fit: contain;
         }
+        /* Set up the grid container */
+        .image-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr); /* 5 columns of equal width */
+          grid-gap: 10px; /* Add some space between the images */
+        }
+
+        /* Style each image item */
+        .image-item {
+          border: 1px solid #ddd; /* Add a border around each item */
+          padding: 10px;
+          text-align: center;
+        }
+
+        /* Style the image itself */
+        .image-item img {
+          max-width: 100%; /* Make sure the image fits within its container */
+          height: auto;
+        }
+
+        /* Style the image caption */
+        .image-caption {
+          margin-top: 10px;
+          font-size: 12px;
+        }
+
     </style>
 </head>
 <body>
@@ -131,6 +157,19 @@
             <img src="{{ query_image_url }}" alt="Uploaded image">
         </div>
     {% endif %}
+
+{% if filenames %}
+    <h2>Similar Images:</h2>
+    <div class="image-grid">
+        {% for filename in filenames %}
+            <div class="image-item">
+            <img src="{{ url_for('static', filename='dog_images/' + filename) }}" alt="{{ filename }}">
+                <div class="image-caption">{{ filename }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 
 </body>
 </html>
