@@ -3,7 +3,7 @@ import io
 
 from flask import Flask, render_template, request
 import PIL
-from distance_metrics import DistanceMetrics, k_most_similar_images
+from distance_metrics_calculation import DistanceMetricsCalculation, k_most_similar_images
 from imageDBHandler import ImageDBHandler
 
 app = Flask(__name__)
@@ -38,7 +38,7 @@ def index():
                 # load PIL image
                 pil_image = PIL.Image.open(image)
                 # create QueryImage object
-                query_image = DistanceMetrics(pil_image, image.filename)
+                query_image = DistanceMetricsCalculation(pil_image, image.filename)
 
                 # convert PIL image to base64 for displaying in HTML
                 img_io = io.BytesIO()
