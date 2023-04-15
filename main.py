@@ -17,7 +17,7 @@ def load_database_images():
     return image_db_handler.get_images()
 
 try:
-    pet_images_df = load_database_images()
+    dog_images_df = load_database_images()
 except:
     print('Could not load table of images')
 
@@ -48,12 +48,9 @@ def index():
 
                 query_image_url = 'data:image/jpeg;base64,' + img_base64
 
-                df_of_k_most_similar_images = k_most_similar_images(query_image, pet_images_df, k, distance_metric)
-
+                df_of_k_most_similar_images = k_most_similar_images(query_image, dog_images_df, k, distance_metric)
                 breed_results = df_of_k_most_similar_images['breed'].value_counts()
-
                 filenames = df_of_k_most_similar_images['filename'].tolist()
-
                 return render_template('index.html', query_image_url=query_image_url, filenames=filenames, breed_results=breed_results, k=k)
 
     # render index template with app description and form
