@@ -1,6 +1,5 @@
 import base64
 import io
-
 from flask import Flask, render_template, request
 import PIL
 from distance_metrics_calculation import DistanceMetricsCalculation, k_most_similar_images
@@ -8,29 +7,25 @@ from imageDBHandler import ImageDBHandler
 
 app = Flask(__name__)
 
-# load images metadata dataframe from PostgreSQL
 def load_database_images():
-    """ Returns as a dataframe the table of pet images
-    """
+    """ Returns as a dataframe the table of dog images"""
     image_db_handler = ImageDBHandler()
-
     return image_db_handler.get_images()
-
 try:
     dog_images_df = load_database_images()
 except:
-    print('Could not load table of images')
+    print('Could not load table of dogs')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
 
-        # retrieve from the user input the distance metric and the desired number of similar images.
+        # get user input.
         distance_metric = request.form['distance_metric']
         k = int(request.form['k'])
 
-        # get uploaded image
+        # get uploaded image.
         image = request.files['image']
 
         if image:
@@ -54,7 +49,7 @@ def index():
                 return render_template('index.html', query_image_url=query_image_url, filenames=filenames, breed_results=breed_results, k=k)
 
     # render index template with app description and form
-    with open('image_search.md', encoding='utf-8') as app_desc:
+    with open('static/image_search.md', encoding='utf-8') as app_desc:
         app_description = app_desc.read()
 
     return render_template('index.html', app_description=app_description)

@@ -1,0 +1,5 @@
+This project is a basic implementation of a content-based image retrieval engine that utilizes PostgreSQL as the storage backend and FLASK python for the application logic. The PostgreSQL database includes image metadata extract... The image features are extracted using the pre-trained VGG16 network.
+
+The application enables users to upload their own image and search for similar images in the PostgreSQL database. To conduct the search, users must indicate the number of nearest neighbor images (K) to retrieve and the distance metric to be employed for the ranking.
+
+The original data source is found on http://vision.stanford.edu/aditya86/ImageNetDogs/ and contains additional information on the train/test splits and baseline results.
