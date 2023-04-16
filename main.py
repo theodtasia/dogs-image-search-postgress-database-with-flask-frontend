@@ -2,7 +2,7 @@ import base64
 import io
 from flask import Flask, render_template, request
 import PIL
-from distance_metrics_calculation import DistanceMetricsCalculation, k_most_similar_images
+from distance_metrics_calculation import DistanceMetricsCalculation, get_knn_results
 from imageDBHandler import ImageDBHandler
 
 app = Flask(__name__)
@@ -43,7 +43,7 @@ def index():
 
                 query_image_url = 'data:image/jpeg;base64,' + img_base64
 
-                df_of_k_most_similar_images = k_most_similar_images(query_image, dog_images_df, k, distance_metric)
+                df_of_k_most_similar_images = get_knn_results(query_image, dog_images_df, k, distance_metric)
                 breed_results = df_of_k_most_similar_images['breed'].value_counts()
                 filenames = df_of_k_most_similar_images['filename'].tolist()
                 return render_template('index.html', query_image_url=query_image_url, filenames=filenames, breed_results=breed_results, k=k)

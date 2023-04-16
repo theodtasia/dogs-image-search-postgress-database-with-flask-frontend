@@ -3,6 +3,7 @@ from scipy.spatial.distance import euclidean, cityblock, minkowski, chebyshev, c
 from imageDBHandler import ImageDBHandler
 from feature_extraction import GetImage
 
+
 class DistanceMetricsCalculation:
     def __init__(self, pil_image, filename) -> None:
         self.image_in_pil_format = pil_image
@@ -13,8 +14,8 @@ class DistanceMetricsCalculation:
         return {'descriptor_vector': self.descriptor_vector,
                 'filename': self.filename}
 
-def k_most_similar_images(query_image, dog_images_df, k, distance_metric='euclidean', verbose=False):
 
+def get_knn_results(image, df, k, distance_metric='euclidean', verbose=False):
     if distance_metric == 'cosine':
         selected_distance_metric = cosine
     elif distance_metric == 'cityblock':
@@ -31,17 +32,18 @@ def k_most_similar_images(query_image, dog_images_df, k, distance_metric='euclid
         selected_distance_metric = canberra
     else:
         raise ValueError(f'Not Found {distance_metric}')
-    
-    dog_images_df['distance'] = dog_images_df['descriptor_vector'].apply(lambda x: selected_distance_metric(query_image.descriptor_vector, x))
-    df_of_k_most_similar_dog_images = dog_images_df.nsmallest(k, 'distance')
+
+    df['distance'] = df['descriptor_vector'].apply(
+        lambda x: selected_distance_metric(image.descriptor_vector, x))
+    df_of_k_most_similar_dog_images = df.nsmallest(k, 'distance')
     if verbose:
-        print(f'Top {k} most similar images of {query_image.filename}')
+        print(f'Top {k} most similar images of {image.filename}')
         for index, item in df_of_k_most_similar_dog_images.iterrows():
             print(' breed {} and image with filename {}'.format(item['breed'], item['filename']))
-    
+
     return df_of_k_most_similar_dog_images
 
 
-def load_database_images():
+def get_images():
     image_db_handler = ImageDBHandler()
     return image_db_handler.get_images()

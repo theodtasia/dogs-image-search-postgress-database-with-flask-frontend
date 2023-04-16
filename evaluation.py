@@ -1,14 +1,14 @@
 import pandas as pd
 import PIL
 from os import path
-from distance_metrics_calculation import DistanceMetricsCalculation, k_most_similar_images, load_database_images
+from distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
 
 
 def get_precision(df, image, k, selected_metric, breed, verbose=False):
     selected_image = DistanceMetricsCalculation(PIL.Image.open(image), image)
-    knn_results = k_most_similar_images(selected_image, df, k, selected_metric, verbose)
+    knn_results = get_knn_results(selected_image, df, k, selected_metric, verbose)
     correct_breed_count = (knn_results['breed'].values == breed).sum()
-    breed_precision = correct_breed_count / len(knn_results.index)
+    breed_precision = correct_breed_count / len(knn_results.index) * 100
     if verbose:
         print(f'Precision is: {breed_precision}')
 
@@ -19,23 +19,27 @@ def get_precision(df, image, k, selected_metric, breed, verbose=False):
 
 
 def metrics_results(image, k, breed):
-    dog_images = load_database_images()
-    metrics = pd.DataFrame(None)
+    dog_images = get_images()
+    metrics = pd.DataFrame()
     all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
+    precision_dict = {}
     for metric in all_metrics:
         knn_results, precision = get_precision(dog_images, image, k, metric, breed)
-        print(f'For metric {metric} precision is {precision}')
+        print(f'For metric {metric} precision is {precision} %')
+        precision_dict[metric] = precision
         metrics = pd.concat([metrics, knn_results])
+    best_metric = max(precision_dict, key=precision_dict.get)
+    print(f'The metric with the highest precision for k = {k} is {best_metric}')
+    return metrics
 
 
 def evaluate_results():
-    image = 'test.jpg'
+    image = 'beagle.jpg'
     print(f'For image {image}')
     for k in [5, 10, 20]:
         print(f'With k={k}:')
-        query_pet_image_breed = 'test'
-        print(f'For image {image}')
-        metrics_results(path.join('static', 'unknown_images', image), k, query_pet_image_breed)
+        breed = 'beagle'
+        metrics_results(path.join('static', 'unknown_images', image), k, breed)
 
 
 if __name__ == '__main__':
