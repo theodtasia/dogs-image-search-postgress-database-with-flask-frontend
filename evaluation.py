@@ -118,7 +118,7 @@ def plot_results(filenames, output_name, precision):
 
 def get_precision(df, image, k, selected_metric, breed, verbose=False):
     selected_image = DistanceMetricsCalculation(PIL.Image.open(image), image)
-    knn_results = get_knn_results(selected_image, df, k, selected_metric, verbose)
+    knn_results = get_knn_results(selected_image, df, k, selected_metric)
     correct_breed_count = (knn_results['breed'].values == breed).sum()
     breed_precision = correct_breed_count / len(knn_results.index) * 100
     if verbose:
