@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
 
 
-def plot_precision_by_metric(precision_dict):
+def plot_precision_by_metric_for_each_k(precision_dict):
     """
     Plots the precision for each k value and for each distance metric used.
     """
@@ -25,7 +25,29 @@ def plot_precision_by_metric(precision_dict):
         i += 1
 
     # Save the output
-    output_path = f"static/results/precision_by_metric_{metric}.png"
+    output_path = f"static/results/precision_by_metric_for_each_k.png"
+    plt.savefig(output_path)
+    print(f"Saved plot to {output_path}")
+
+    # Close the figure
+    plt.close(fig)
+
+def plot_precision_by_metric(metrics, k):
+    """
+    Plots a bar chart of the precision for each metric and saves the output as precision_by_metric_k{k}.png.
+    """
+    # Group the metrics by metric name and calculate the mean precision for each group
+    metrics_grouped = metrics.groupby('metric_name')['breed'].apply(lambda x: (x == 'beagle').sum() / len(x) * 100)
+    metrics_grouped.sort_values(ascending=False, inplace=True)
+
+    # Create the bar chart
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.bar(metrics_grouped.index, metrics_grouped.values, color='blue')
+    ax.set_ylabel('Precision (%)')
+    ax.set_title(f'Precision by metric for k={k}')
+
+    # Save the output
+    output_path = f"static/results/precision_by_metric_k{k}.png"
     plt.savefig(output_path)
     print(f"Saved plot to {output_path}")
 
@@ -102,20 +124,30 @@ def metrics_results(image, k, breed):
     for metric in all_metrics:
         knn_results, precision = get_precision(dog_images, image, k, metric, breed)
         print(f'For metric {metric} precision is {precision} %')
-        precision_dict[metric] = precision
+        precision_dict[metric] = {i: get_precision(dog_images, image, i, metric, breed)[1] for i in range(1, k + 1)}
         metrics = pd.concat([metrics, knn_results])
-    best_metric = max(precision_dict, key=precision_dict.get)
+    best_metric = max(precision_dict, key=lambda x: max(precision_dict[x].values()))
     print(f'The metric with the highest precision for k = {k} is {best_metric}')
-    return metrics
+    plot_precision_by_metric(metrics, k)
+    return metrics, precision_dict
 
 
 def evaluate_results():
     image = 'beagle.jpg'
     print(f'For image {image}')
+    all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
+    precision_dict = {}
     for k in [5, 10, 20]:
         print(f'With k={k}:')
         breed = 'beagle'
-        metrics_results(path.join('static', 'unknown_images', image), k, breed)
+        metric_precision = {}
+        for metric in all_metrics:
+            knn_results, precision = get_precision(get_images(), path.join('static', 'unknown_images', image), k, metric, breed)
+            print(f'For metric {metric} precision is {precision:.1f} %')
+            metric_precision[metric] = precision
+        precision_dict[k] = metric_precision
+    plot_precision_by_metric_for_each_k(precision_dict)
+
 
 
 if __name__ == '__main__':
