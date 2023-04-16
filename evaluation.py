@@ -19,7 +19,6 @@ def plot_precision_by_metric_for_each_k(precision_dict):
     for metric, precision_by_k in precision_dict.items():
         axs[i].plot(list(precision_by_k.keys()), list(precision_by_k.values()))
         axs[i].set_title(f"Precision by k for {metric}")
-        axs[i].set_xlabel("k")
         axs[i].set_ylabel("Precision (%)")
         i += 1
 
