@@ -3,7 +3,7 @@ import PIL
 from os import path
 from matplotlib import pyplot as plt
 
-from src.distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
+from distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
 
 
 def plot_precision_by_metric_for_each_k(precision_dict):
@@ -108,7 +108,7 @@ def plot_results(filenames, output_name, precision):
     fig.suptitle(title)
 
     # Save the output
-    output_path = f"static/results/{output_name}.png"
+    output_path = f"../static/results/{output_name}.png"
     plt.savefig(output_path)
     print(f"Saved plot to {output_path}")
 

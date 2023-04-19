@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, insert
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER, BYTEA
 from pandas import read_sql
 from tqdm import tqdm
-from src.feature_extraction import GetImage
+from feature_extraction import GetImage
 
 
 class ImageDBHandler:
