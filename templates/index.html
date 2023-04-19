@@ -53,14 +53,14 @@
             <img src="{{ query_image_url }}" alt="Uploaded image">
         </div>
     {% endif %}
-   {% if breed_count %}
+   {% if not breed_count.empty %}
     <h2>Breed counts:</h2>
     <ul>
         {% for breed, count in breed_count.items() %}
             <li>{{ breed }}: {{ count }}</li>
         {% endfor %}
     </ul>
-{% endif %}
+   {% endif %}
 
     {% if filenames %}
         <h2>Similar Images:</h2>
