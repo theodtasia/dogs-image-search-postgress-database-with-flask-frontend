@@ -31,7 +31,7 @@
             </select>
             <br>
             <br>
-            <label for="k">Select number of similar images to retrieve:</label>
+            <label for="k">Select number of similar dog images to retrieve:</label>
             <select id="k" name="k">
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -39,7 +39,7 @@
             </select>
             <br>
             <br>
-            <label for="image">Upload a query image:</label>
+            <label for="image">Upload a dog image:</label>
             <input type="file" id="image" name="image" accept="image/*" required>
             <br>
             <br>
@@ -47,7 +47,7 @@
         </form>
     </div>
 <!-- Uploaded image -->
-    {% if query_image_url %}
+    {% if selected_image_url %}
         <h2>Uploaded image:</h2>
         <div class="img_center">
             <img src="{{ query_image_url }}" alt="Uploaded image">
