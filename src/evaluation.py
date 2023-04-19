@@ -3,7 +3,7 @@ import PIL
 from os import path
 from matplotlib import pyplot as plt
 
-from distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
+from src.distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
 
 
 def plot_precision_by_metric_for_each_k(precision_dict):
@@ -23,7 +23,7 @@ def plot_precision_by_metric_for_each_k(precision_dict):
         i += 1
 
     # Save the output
-    output_path = f"static/results/precision_by_metric_for_each_k.png"
+    output_path = f"../static/results/precision_by_metric_for_each_k.png"
     plt.savefig(output_path)
     print(f"Saved plot to {output_path}")
 
@@ -124,7 +124,7 @@ def get_precision(df, image, k, selected_metric, breed, verbose=False):
     if verbose:
         print(f'Precision is: {breed_precision}')
 
-    knn_images = knn_results['filename'].apply(lambda x: path.join('static', 'dog_images', x)).tolist()
+    knn_images = knn_results['filename'].apply(lambda x: path.join('../static', 'dog_images', x)).tolist()
     plot_results(knn_images,
                  f'''{selected_image.filename.split('.')[0]}_{selected_metric}_k{k}''', breed_precision)
     return knn_results, breed_precision
@@ -140,7 +140,7 @@ def evaluate_results():
         breed = 'beagle'
         metric_precision = {}
         for metric in all_metrics:
-            knn_results, precision = get_precision(get_images(), path.join('static', 'unknown_images', image), k,
+            knn_results, precision = get_precision(get_images(), path.join('../static', 'unknown_images', image), k,
                                                    metric, breed, metric)
             print(f'For metric {metric} precision is {precision:.1f} %')
             metric_precision[metric] = precision

@@ -1,7 +1,7 @@
 from os import path
 from scipy.spatial.distance import euclidean, cityblock, minkowski, chebyshev, cosine, canberra, jaccard, mahalanobis
 from imageDBHandler import ImageDBHandler
-from feature_extraction import GetImage
+from src.feature_extraction import GetImage
 
 
 class DistanceMetricsCalculation:

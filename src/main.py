@@ -54,7 +54,7 @@ def index():
                                        breed_count=breed_count, k=k)
 
     # Render the index template with app description and form
-    with open('static/image_search.md', encoding='utf-8') as app_desc:
+    with open('./static/image_search.md', encoding='utf-8') as app_desc:
         app_description = app_desc.read()
 
     return render_template('index.html', app_description=app_description)

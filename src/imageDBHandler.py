@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, insert
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER, BYTEA
 from pandas import read_sql
 from tqdm import tqdm
-from feature_extraction import GetImage
+from src.feature_extraction import GetImage
 
 
 class ImageDBHandler:
@@ -89,7 +89,7 @@ class ImageDBHandler:
 
 def modify_filenames():
     # Set the path to the directory containing the folders
-    folder_path = 'static/dog_images'
+    folder_path = '../static/dog_images'
 
     # Get a list of all the folder names in the directory
     folder_names = os.listdir(folder_path)
@@ -141,7 +141,7 @@ def extract_files_and_remove_folders(folder_path):
 
 
 def get_dog_images():
-    folder_path = 'static/dog_images/'
+    folder_path = '../static/dog_images/'
     modify_filenames()
     extract_files_and_remove_folders(folder_path)
     folder_files = []
@@ -152,7 +152,7 @@ def get_dog_images():
     return folder_files
 
 def get_dog_images():
-    folder_path = 'static/dog_images/'
+    folder_path = '../static/dog_images/'
     modify_filenames()  # Rename image files to lowercase and replace spaces with underscores
     extract_files_and_remove_folders(folder_path)  # Extract folder files and remove redundant subfolders
     folder_files = []
