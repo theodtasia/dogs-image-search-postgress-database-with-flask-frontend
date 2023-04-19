@@ -79,7 +79,7 @@ class GetImage:
 
 # Get a list of randomly selected dog image files
 def get_dog_images():
-    folder_path = '../static/dog_images'
+    folder_path = 'static/dog_images'
     random_files = random.sample(folder_path, 500)
     return random_files
 

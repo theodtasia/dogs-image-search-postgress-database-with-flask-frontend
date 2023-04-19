@@ -46,9 +46,10 @@ def index():
 
                 # Get the k most similar images and their breed counts
                 df_of_k_most_similar_images = get_knn_results(selected_image, dog_images_df, k, distance_metric)
-                breed_count = df_of_k_most_similar_images['breed'].value_counts()
+                if not df_of_k_most_similar_images.empty:
+                    breed_count = df_of_k_most_similar_images['breed'].value_counts()
                 filenames = df_of_k_most_similar_images['filename'].tolist()
-
+                print(df_of_k_most_similar_images)
                 # Render the index template with query image, breed counts, and similar images
                 return render_template('index.html', selected_image=selected_image_url, filenames=filenames,
                                        breed_count=breed_count, k=k)
