@@ -47,13 +47,15 @@
         </form>
     </div>
 <!-- Uploaded image -->
-    {% if selected_image_url %}
+    {% if selected_image %}
         <h2>Uploaded image:</h2>
         <div class="img_center">
-            <img src="{{ query_image_url }}" alt="Uploaded image">
+            <img src="{{ selected_image }}" alt="Uploaded image">
         </div>
     {% endif %}
-   {% if not breed_count.empty %}
+    {% if breed_count is not defined %}
+     <p>No breed count available.</p>
+    {% else %}
     <h2>Breed counts:</h2>
     <ul>
         {% for breed, count in breed_count.items() %}
