@@ -133,7 +133,7 @@ def get_precision(df, image, k, selected_metric, breed, verbose=False):
 def evaluate_results():
     image = 'beagle.jpg'
     print(f'For image {image}')
-    all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
+    all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard', 'mahalanobis']
     precision_dict = {}
     for k in [5, 10, 20]:
         print(f'With k={k}:')

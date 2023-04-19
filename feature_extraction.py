@@ -11,6 +11,10 @@ import random
 
 # Instantiate a pre-trained VGG16 model and create a new model with the same input, but with only the output of the
 # fc1 layer
+
+#from keras.applications.resnet50 import preprocess_input, decode_predictions
+#base_model = ResNet50(weights='imagenet')
+
 base_model = VGG16(weights='imagenet')
 model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
 
