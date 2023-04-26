@@ -25,3 +25,25 @@ DB_PORT=5432
 DB_NAME=image_search
 DB_USER=postgres
 DB_SECRET=mpompos`
+
+**Setting up the Dataset of Images:**
+
+Go to the following link: http://vision.stanford.edu/aditya86/ImageNetDogs/
+
+Scroll down and click on the "Download images" link.
+
+This will download a file named "images.tar" to your computer.
+
+Extract the contents of the tar file using a file archiver program such as 7-Zip or WinZip. This will create a folder named "Images" containing the dataset.
+
+Add the folder inside the dog_images directory of the project
+
+**Setting up the PostgreSQL Database:**
+
+Run the following command to create the dog_images table:
+
+`python db.py --do=create`
+
+Run the following command to add the dog images records into to the table of the PostgreSQL database. The images will be randomly selected using the take_image_files_sample function from the image_sampling.py module:
+
+`python db.py --do=add`
