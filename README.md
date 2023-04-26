@@ -44,6 +44,6 @@ Run the following command to create the dog_images table:
 
 `python db.py --do=create`
 
-Run the following command to add the dog images records into to the table of the PostgreSQL database. The images will be randomly selected using the take_image_files_sample function from the image_sampling.py module:
+Run the following command to add the dog images records into to the table of the PostgreSQL database. 
 
 `python db.py --do=add`
