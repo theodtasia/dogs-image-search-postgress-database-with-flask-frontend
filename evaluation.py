@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from distance_metrics_calculation import DistanceMetricsCalculation, get_images, get_knn_results
 
 
-def plot_precision_by_metric_for_each_k(precision_dict):
+def plot_precision_by_metric_for_each_k(precision_dict, folder):
     """
     Plots the precision for each k value and for each distance metric used.
     """
@@ -23,14 +23,15 @@ def plot_precision_by_metric_for_each_k(precision_dict):
         i += 1
 
     # Save the output
-    output_path = f"static/results/precision_by_metric_for_each_k.png"
+    output_path = f"static/results/{folder}/precision_by_metric_for_each_k.png"
     plt.savefig(output_path)
     print(f"Saved plot to {output_path}")
 
     # Close the figure
     plt.close(fig)
 
-def plot_precision_by_metric(precision_dict):
+
+def plot_precision_by_metric(precision_dict, folder):
     """
     Plots a bar chart of precision values for each metric for different values of k.
     The input is a dictionary where the keys are the metric names and the values are dictionaries,
@@ -68,11 +69,10 @@ def plot_precision_by_metric(precision_dict):
 
     # Add a title and save the plot
     ax.set_title('Precision by Metric and K')
-    plt.savefig('static/results/precision_by_metric.png')
+    plt.savefig(f'static/results/{folder}/precision_by_metric.png')
 
     # Close the figure
     plt.close(fig)
-
 
 
 def plot_results(filenames, output_name, folder, precision):
@@ -133,28 +133,34 @@ def get_precision(df, image, folder, k, selected_metric, breed, verbose=False):
 def evaluate_results():
     image = 'n02085620_477_Chihuahua.jpg'
     folder = 'known_dog'
+    breed = 'Chihuahua'
     print(f'For image {image}')
     all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
     precision_dict = {}
     for k in [5, 10, 20]:
         print(f'With k={k}:')
-        breed = 'Chihuahua'
         metric_precision = {}
         for metric in all_metrics:
-            knn_results, precision = get_precision(get_images(), path.join('static', 'test_images/known_images', image), folder, k,
-                                                   metric, breed, metric)
+            knn_results, precision = get_precision(get_images(), path.join('static', 'test_images/known_images', image), folder, k, metric, breed)
             print(f'For metric {metric} precision is {precision:.1f} %')
             metric_precision[metric] = precision
         precision_dict[k] = metric_precision
 
-    # find the best method with the maximum precision
-    best_k, best_metric = max(((k, metric) for k, v in precision_dict.items() for metric, precision in v.items()),
-                              key=lambda x: x[1])
+    best_k = None
+    best_metric = None
+    best_precision = 0.0
 
-    print(
-        f'The best method is with k={best_k} and metric={best_metric} with a precision of {precision_dict[best_k][best_metric]:.1f}%')
-    # plot_precision_by_metric_for_each_k(precision_dict)
-    plot_precision_by_metric(precision_dict)
+    for k, metrics in precision_dict.items():
+        for metric, precision in metrics.items():
+            if precision > best_precision:
+                best_k = k
+                best_metric = metric
+                best_precision = precision
+
+    print(f"Best precision: {best_precision}, Metric: {best_metric}, K: {best_k}")
+
+    plot_precision_by_metric_for_each_k(precision_dict, folder)
+    plot_precision_by_metric(precision_dict, folder)
 
 
 if __name__ == '__main__':
