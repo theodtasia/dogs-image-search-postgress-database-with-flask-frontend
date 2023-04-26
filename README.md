@@ -47,3 +47,18 @@ Run the following command to create the dog_images table:
 Run the following command to add the dog images records into to the table of the PostgreSQL database. 
 
 `python db.py --do=add`
+
+**Evaluation**
+
+if you want to evaluate the results and make plots for an unkown image
+update the following consts in evaluation.py with your imageName and breed
+
+ `   image = 'beagle.jpg'
+    breed = 'Beagle'`
+ 
+At the breed const write the name of the dog breed that your image includes
+in EXACTLY same way it appears in the stanford image folders, 
+for example the correct breed name is pug and not PUG or Pug.
+Check the dataset folder names.
+
+Run the evaluation.py

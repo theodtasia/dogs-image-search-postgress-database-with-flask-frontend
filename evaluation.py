@@ -131,9 +131,9 @@ def get_precision(df, image, folder, k, selected_metric, breed, verbose=False):
 
 
 def evaluate_results():
-    image = 'n02085620_477_Chihuahua.jpg'
-    folder = 'known_dog'
-    breed = 'Chihuahua'
+    image = 'beagle.jpg'
+    folder = 'unknown_dog'
+    breed = 'beagle'
     print(f'For image {image}')
     all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
     precision_dict = {}
@@ -141,7 +141,7 @@ def evaluate_results():
         print(f'With k={k}:')
         metric_precision = {}
         for metric in all_metrics:
-            knn_results, precision = get_precision(get_images(), path.join('static', 'test_images/known_images', image), folder, k, metric, breed)
+            knn_results, precision = get_precision(get_images(), path.join('static', 'test_images/unknown_images', image), folder, k, metric, breed)
             print(f'For metric {metric} precision is {precision:.1f} %')
             metric_precision[metric] = precision
         precision_dict[k] = metric_precision
