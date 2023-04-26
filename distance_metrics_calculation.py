@@ -1,5 +1,7 @@
 from os import path
-from scipy.spatial.distance import euclidean, cityblock, minkowski, chebyshev, cosine, canberra, jaccard, mahalanobis
+
+import numpy as np
+from scipy.spatial.distance import euclidean, cityblock, minkowski, chebyshev, cosine, canberra, jaccard
 from imageDBHandler import ImageDBHandler
 from feature_extraction import GetImage
 
@@ -37,8 +39,6 @@ def get_knn_results(image, df, k, distance_metric='euclidean'):
         selected_distance_metric = jaccard
     elif distance_metric == 'canberra':
         selected_distance_metric = canberra
-    elif distance_metric == 'mahalanobis':
-        selected_distance_metric = mahalanobis
     else:
         # Raise an error if distance metric is not recognized
         raise ValueError(f'Not Found {distance_metric}')

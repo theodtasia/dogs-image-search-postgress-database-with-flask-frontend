@@ -75,7 +75,7 @@ def plot_precision_by_metric(precision_dict):
 
 
 
-def plot_results(filenames, output_name, precision):
+def plot_results(filenames, output_name, folder, precision):
     """
     Plots a grid of images specified by filenames and saves the output as output_name.png.
     The maximum number of images that can be plotted is 20.
@@ -108,7 +108,7 @@ def plot_results(filenames, output_name, precision):
     fig.suptitle(title)
 
     # Save the output
-    output_path = f"../static/results/{output_name}.png"
+    output_path = f"./static/results/{folder}/{output_name}.png"
     plt.savefig(output_path)
     print(f"Saved plot to {output_path}")
 
@@ -116,7 +116,7 @@ def plot_results(filenames, output_name, precision):
     plt.close(fig)
 
 
-def get_precision(df, image, k, selected_metric, breed, verbose=False):
+def get_precision(df, image, folder, k, selected_metric, breed, verbose=False):
     selected_image = DistanceMetricsCalculation(PIL.Image.open(image), image)
     knn_results = get_knn_results(selected_image, df, k, selected_metric)
     correct_breed_count = (knn_results['breed'].values == breed).sum()
@@ -126,21 +126,22 @@ def get_precision(df, image, k, selected_metric, breed, verbose=False):
 
     knn_images = knn_results['filename'].apply(lambda x: path.join('static', 'dog_images', x)).tolist()
     plot_results(knn_images,
-                 f'''{selected_image.filename.split('.')[0]}_{selected_metric}_k{k}''', breed_precision)
+                 f'''{selected_image.filename.split('.')[0]}_{selected_metric}_k{k}''', folder, breed_precision)
     return knn_results, breed_precision
 
 
 def evaluate_results():
-    image = 'beagle.jpg'
+    image = 'n02085620_477_Chihuahua.jpg'
+    folder = 'known_dog'
     print(f'For image {image}')
-    all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard', 'mahalanobis']
+    all_metrics = ['euclidean', 'cityblock', 'minkowski', 'chebyshev', 'cosine', 'canberra', 'jaccard']
     precision_dict = {}
     for k in [5, 10, 20]:
         print(f'With k={k}:')
-        breed = 'beagle'
+        breed = 'Chihuahua'
         metric_precision = {}
         for metric in all_metrics:
-            knn_results, precision = get_precision(get_images(), path.join('static', 'unknown_images', image), k,
+            knn_results, precision = get_precision(get_images(), path.join('static', 'test_images/known_images', image), folder, k,
                                                    metric, breed, metric)
             print(f'For metric {metric} precision is {precision:.1f} %')
             metric_precision[metric] = precision
