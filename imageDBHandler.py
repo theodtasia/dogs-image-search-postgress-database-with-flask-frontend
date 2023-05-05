@@ -142,17 +142,6 @@ def extract_files_and_remove_folders(folder_path):
 
 def get_dog_images():
     folder_path = 'static/dog_images/'
-    modify_filenames()
-    extract_files_and_remove_folders(folder_path)
-    folder_files = []
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            folder_files.append(os.path.join(root, file))
-
-    return folder_files
-
-def get_dog_images():
-    folder_path = 'static/dog_images/'
     modify_filenames()  # Rename image files to lowercase and replace spaces with underscores
     extract_files_and_remove_folders(folder_path)  # Extract folder files and remove redundant subfolders
     folder_files = []
@@ -208,4 +197,3 @@ def main():
         db_handler.add_images()
     elif args.do == 'delete':  # If the 'delete' command is specified, delete image records from the database
         db_handler.delete_images()
-
