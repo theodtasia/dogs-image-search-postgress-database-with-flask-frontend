@@ -14,11 +14,11 @@ def get_images():
     return image_db_handler.get_images()
 
 
+dog_images_df = None
 try:
     dog_images_df = get_images()
-except:
-    print('Could not load table of dogs')
-
+except Exception as e:
+    print(f"Could not load table of dogs. Error: {e}")
 
 # Define a route to handle the form submission and display results
 @app.route('/', methods=['GET', 'POST'])
