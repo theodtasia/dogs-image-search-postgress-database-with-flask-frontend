@@ -39,7 +39,7 @@ This will download a file named "images.tar" to your computer.
 
 Extract the contents of the tar file using a file archiver program such as 7-Zip or WinZip. This will create a folder named "Images" containing the dataset.
 
-Add the folder inside the dog_images directory of the project
+Add the breed folders inside the dog_images directory of the project
 
 # **Setting up the PostgreSQL Database:**
 
