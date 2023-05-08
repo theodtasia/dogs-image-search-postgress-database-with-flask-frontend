@@ -12,14 +12,16 @@ import random
 # Instantiate a pre-trained VGG16 model and create a new model with the same input, but with only the output of the
 # fc1 layer
 
-#from keras.applications.resnet50 import preprocess_input, decode_predictions
-#base_model = ResNet50(weights='imagenet')
+# from keras.applications.resnet50 import preprocess_input, decode_predictions
+# base_model = ResNet50(weights='imagenet')
 
 base_model = VGG16(weights='imagenet')
 model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc1').output)
 
+
 class GetImage:
     """Define a class to represent an image and its associated properties (breed, descriptor vector, etc.)"""
+
     def __init__(self, filename) -> None:
         # Open the image file and store it in PIL format
         self.image_in_pil_format = Image.open(filename)
