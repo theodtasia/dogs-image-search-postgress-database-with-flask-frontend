@@ -2,8 +2,7 @@
 This project is a straightforward implementation of a content-based image retrieval engine that utilizes Python for the application logic and PostgreSQL as a storage backend. The VGG16 model is employed to extract features from images. The UI Application was developed using Flask.
 
 # **Dataset**
-The original Oxford-IIIT Pet Dataset, which comprises approximately 7000 dog and cat images annotated with their corresponding breeds, can be found at the link provided.
-
+The Stanford Dog Dataset is a sizable and thorough collection of over 20,000 annotated photos of dog breeds representing 120 varieties.
 # **Requirements**
 To use this project, you must create a Python virtual environment and install the packages found in the base_requirements.txt file.
 
