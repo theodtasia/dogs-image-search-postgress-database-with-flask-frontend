@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 
 # **PostgreSQL:**
-To use this application, you must establish a connection with a PostgreSQL database and create a table named pet_images. To establish a connection with PostgreSQL, create a .env file in the following format:
+To use this application, you must establish a connection with a PostgreSQL database and create a table named dog_images. To establish a connection with PostgreSQL, create a .env file in the following format:
 
 ```
 DB_HOST=localhost

@@ -28,7 +28,7 @@ class GetImage:
         # Generate a descriptor vector for the image
         self.descriptor_vector = self.get_descriptor_vector(self.image_in_pil_format)
         # Extract the breed from the image file name
-        self.breed = self.get_pet_breed(filename)
+        self.breed = self.get_dog_breed(filename)
         # Store only the file name (without the path) of the image
         self.filename = path.split(filename)[1]
         # Store the path to the folder containing the image
@@ -42,8 +42,8 @@ class GetImage:
     def encode_descriptor_vector(self):
         self.descriptor_vector = pickle.dumps(self.descriptor_vector)
 
-    # Get the breed of the pet in the image from the filename
-    def get_pet_breed(self, image_filename):
+    # Get the breed of the dog in the image from the filename
+    def get_dog_breed(self, image_filename):
         breed_name = image_filename.split('_')[3]
         return breed_name.replace('.jpg', '')
 
