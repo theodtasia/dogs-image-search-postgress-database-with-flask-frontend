@@ -41,6 +41,11 @@ Extract the contents of the tar file using a file archiver program such as 7-Zip
 
 Add the breed folders inside the dog_images directory of the project
 
+# **Setting up the App:**
+The application can then be started by typing the command:
+```
+python main.py
+```
 # **Setting up the PostgreSQL Database:**
 
 Run the following command to create the dog_images table:
